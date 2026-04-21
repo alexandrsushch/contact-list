@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список контактов</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Список контактов</h1>
+        <div class="header__actions">
+            <button type="button" class="btn btn--primary" id="openSearch">Поиск</button>
+            <button type="button" class="btn btn--danger" id="clearAll">Очистить всё</button>
+        </div>
+    </header>
+
+    <main class="main">
+        <section class="card">
+            <h2 class="card__title">Добавить контакт</h2>
+            <form class="form" id="addForm" novalidate>
+                <label class="form__field">
+                    <span>Имя</span>
+                    <input type="text" name="name" autocomplete="off">
+                    <span class="form__error" data-error-for="name"></span>
+                </label>
+                <label class="form__field">
+                    <span>Должность</span>
+                    <input type="text" name="position" autocomplete="off">
+                    <span class="form__error" data-error-for="position"></span>
+                </label>
+                <label class="form__field">
+                    <span>Телефон</span>
+                    <input type="tel" name="phone" placeholder="+7 (999) 123-45-67" autocomplete="off">
+                    <span class="form__error" data-error-for="phone"></span>
+                </label>
+                <button type="submit" class="btn btn--primary">Добавить</button>
+            </form>
+        </section>
+
+        <section class="card">
+            <div class="alphabet" id="alphabet"></div>
+        </section>
+
+        <section class="card">
+            <div class="list-header">
+                <h2 class="card__title" id="listTitle">Все контакты</h2>
+                <button type="button" class="btn btn--link" id="resetFilter" hidden>Показать всех</button>
+            </div>
+            <ul class="contacts" id="contacts"></ul>
+            <p class="empty" id="empty" hidden>Пока нет контактов. Добавьте первый через форму выше.</p>
+        </section>
+    </main>
+
+    <dialog class="dialog" id="editDialog">
+        <form method="dialog" class="form" id="editForm" novalidate>
+            <h2 class="dialog__title">Редактирование контакта</h2>
+            <input type="hidden" name="id">
+            <label class="form__field">
+                <span>Имя</span>
+                <input type="text" name="name" autocomplete="off">
+                <span class="form__error" data-error-for="name"></span>
+            </label>
+            <label class="form__field">
+                <span>Должность</span>
+                <input type="text" name="position" autocomplete="off">
+                <span class="form__error" data-error-for="position"></span>
+            </label>
+            <label class="form__field">
+                <span>Телефон</span>
+                <input type="tel" name="phone" autocomplete="off">
+                <span class="form__error" data-error-for="phone"></span>
+            </label>
+            <div class="dialog__actions">
+                <button type="button" class="btn btn--ghost" data-close>Отмена</button>
+                <button type="submit" class="btn btn--primary">Сохранить</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog class="dialog" id="searchDialog">
+        <div class="dialog__head">
+            <h2 class="dialog__title">Поиск контактов</h2>
+            <button type="button" class="btn btn--ghost" data-close>Закрыть</button>
+        </div>
+        <label class="form__field">
+            <input type="search" id="searchInput" placeholder="Имя, должность или телефон" autocomplete="off">
+        </label>
+        <ul class="contacts" id="searchResults"></ul>
+        <p class="empty" id="searchEmpty">Введите запрос для поиска.</p>
+    </dialog>
+
+    <script src="script.js"></script>
+</body>
+</html>
