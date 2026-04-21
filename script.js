@@ -64,11 +64,10 @@
                 : 'Должность: 2–50 символов, буквы, цифры, пробел и дефис';
         }
         if (field === 'phone') {
-            const digits = trimmed.replace(/[^\d]/g, '');
-            const okPlus = /^\+7\d{10}$/.test(trimmed.replace(/[\s()-]/g, ''));
-            const ok8 = /^8\d{10}$/.test(trimmed.replace(/[\s()-]/g, ''));
-            if ((okPlus || ok8) && digits.length >= 11) return '';
-            return 'Телефон: +7XXXXXXXXXX или 8XXXXXXXXXX';
+            const clean = trimmed.replace(/[\s()-]/g, '');
+            return /^(\+7|8)\d{10}$/.test(clean)
+                ? ''
+                : 'Телефон: +7XXXXXXXXXX или 8XXXXXXXXXX';
         }
         return '';
     }
@@ -176,8 +175,12 @@
 
     function render() {
         const groups = groupByLetter(state.contacts);
+        if (state.activeLetter && !groups[state.activeLetter]) {
+            state.activeLetter = null;
+        }
         renderAlphabet(groups);
         renderList(groups);
+        if (els.searchDialog.open) renderSearchResults(els.searchInput.value);
     }
 
     function renderAlphabet(groups) {
@@ -363,10 +366,7 @@
         if (!item) return;
         const id = item.dataset.id;
         if (btn.dataset.action === 'edit') openEditDialog(id);
-        if (btn.dataset.action === 'delete') {
-            deleteContact(id);
-            if (els.searchDialog.open) renderSearchResults(els.searchInput.value);
-        }
+        if (btn.dataset.action === 'delete') deleteContact(id);
     }
 
     els.resetFilter.addEventListener('click', () => {
