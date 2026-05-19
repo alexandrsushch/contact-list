@@ -1,6 +1,6 @@
 # Список контактов
 
-Учебный проект на чистом JavaScript. Реализован аналог [a-khramtsov.github.io/contactList](https://a-khramtsov.github.io/contactList/).
+Учебный проект на TypeScript + Vite. Реализован аналог [a-khramtsov.github.io/contactList](https://a-khramtsov.github.io/contactList/).
 
 ## Что умеет
 
@@ -16,17 +16,26 @@
 
 ```
 contactList/
-├── index.html   — разметка страницы и модалок
-├── style.css    — стили
-├── script.js    — логика: state, рендер, валидация, обработчики событий
+├── index.html        — разметка страницы и модалок
+├── style.css         — стили
+├── src/
+│   └── main.ts       — логика: state, рендер, валидация, обработчики событий
+├── tsconfig.json
+├── package.json
 └── README.md
 ```
 
-Единый источник истины — массив `state.contacts` в `script.js`. Любое изменение идёт через функции `addContact / updateContact / deleteContact / clearAll`, затем `persist()` в `localStorage` и `render()` перерисовывает UI.
+Единый источник истины — массив `state.contacts` в `src/main.ts`. Любое изменение идёт через функции `addContact / updateContact / deleteContact / clearAll`, затем `persist()` в `localStorage` и `render()` перерисовывает UI.
 
 ## Как запустить
 
-Открыть `index.html` в браузере. Сборка не нужна.
+```bash
+npm install
+npm run dev       # дев-сервер с hot reload
+npm run build     # сборка в dist/
+npm run preview   # предпросмотр собранной версии
+npm run typecheck # проверка типов без сборки
+```
 
 ## Правила валидации
 
