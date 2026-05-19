@@ -12,6 +12,13 @@
 - Поиск по имени, должности и телефону в отдельной модалке. В результатах поиска доступны те же действия — редактирование и удаление.
 - Все данные сохраняются в `localStorage` и подтягиваются после перезагрузки страницы.
 
+## Стек
+
+- **TypeScript 5** — строгая типизация (`strict: true`).
+- **Vite 5** — дев-сервер с hot reload, продакшн-сборка.
+- **Vanilla DOM API** — без фреймворков, только нативный `document.*`, `dialog`, `dataset`.
+- **localStorage** — хранение контактов между сессиями.
+
 ## Структура
 
 ```
@@ -26,6 +33,39 @@ contactList/
 ```
 
 Единый источник истины — массив `state.contacts` в `src/main.ts`. Любое изменение идёт через функции `addContact / updateContact / deleteContact / clearAll`, затем `persist()` в `localStorage` и `render()` перерисовывает UI.
+
+## Типы данных
+
+Описаны в начале [src/main.ts](src/main.ts):
+
+```ts
+type Contact = {
+    id: string;       // crypto.randomUUID()
+    name: string;
+    position: string;
+    phone: string;    // нормализованный, в формате +7XXXXXXXXXX
+};
+
+type Field = 'name' | 'position' | 'phone';
+
+type ContactValues = {
+    name: string;
+    position: string;
+    phone: string;
+};
+
+type State = {
+    contacts: Contact[];
+    activeLetter: string | null;  // буква текущего фильтра, null = «все»
+};
+
+type Groups = Record<string, Contact[]>;  // контакты, сгруппированные по первой букве
+```
+
+## Требования
+
+- **Node.js** ≥ 18
+- **npm** (идёт в комплекте с Node)
 
 ## Как запустить
 
